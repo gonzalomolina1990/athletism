@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+    <title>Clicker de Carreras</title>
+</head>
+<body>
+    <h1>Click para correr más rápido</h1>
+    <div class="track">
+        <div class="runner" id="player" style="left: 0;"></div>
+        <div class="rival" id="rival1" style="left: 0; top: 60px;"></div>
+        <div class="rival" id="rival2" style="left: 0; top: 100px;"></div>
+        <div class="rival" id="rival3" style="left: 0; top: 140px;"></div>
+    </div>
+    <button id="click-button">¡Corre!</button>
+    
+    <script>
+        let speed = 0;
+        let player = document.getElementById("player");
+        let rivals = [
+            { element: document.getElementById("rival1"), speed: Math.random() * 2 + 1 },
+            { element: document.getElementById("rival2"), speed: Math.random() * 2 + 1 },
+            { element: document.getElementById("rival3"), speed: Math.random() * 2 + 1 }
+        ];
+
+        document.getElementById("click-button").addEventListener("click", () => {
+            speed += 2;
+        });
+
+        function updateGame() {
+            speed *= 0.98; // Reduce la velocidad con el tiempo
+            player.style.left = parseFloat(player.style.left) + speed + "px";
+            
+            rivals.forEach(rival => {
+                rival.speed *= 0.99;
+                rival.element.style.left = parseFloat(rival.element.style.left) + rival.speed + "px";
+            });
+            
+            requestAnimationFrame(updateGame);
+        }
+
+        updateGame();
+    </script>
+</body>
+</html>
